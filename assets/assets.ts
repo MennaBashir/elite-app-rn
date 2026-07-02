@@ -4,4 +4,6 @@ export const assets: Record<string, string> = {
   item2: require('./images/item2.png'),
   item3: require('./images/item3.png'),
   item4: require('./images/item4.png'),
+  apple: require('./images/apple.png'),
+  google: require('./images/google.png'),
 };

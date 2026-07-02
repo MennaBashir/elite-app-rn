@@ -35,7 +35,12 @@ export default function RootLayout() {
   if (!loaded && !error) {
     return <Text>Loading...</Text>;
   }
-  console.log(loaded, error);
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(onboarding)" />
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(auth)" />
+    </Stack>
+  );
 }
