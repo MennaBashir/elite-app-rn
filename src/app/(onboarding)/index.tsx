@@ -12,17 +12,23 @@ export default function OnboardingIndex() {
   };
   return (
     <SafeAreaView>
-      <View className="flex h-screen w-full flex-col relative">
-        <View className="w-full h-full  flex-1">
-          <Image source={assets.onboard1} style={{ width: '100%', height: '100%' }} contentFit="cover" />
+      <View className="relative flex h-screen w-full flex-col">
+        <View className="h-full w-full  flex-1">
+          <Image
+            source={assets.onboard1}
+            style={{ width: '100%', height: '100%' }}
+            contentFit="cover"
+          />
         </View>
-        <View className="w-full absolute h-[460px] rounded-t-3xl bottom-0 flex-col items-center justify-center gap-2 bg-white p-4">
-         <View className="flex-row items-center justify-center gap-2 pb-10">
-          <View className="h-2 w-8 rounded-[40px] bg-black" />
-          <View className="h-2 w-2 rounded-full bg-[#C6C6CD]" />
-          <View className="h-2 w-2 rounded-full bg-[#C6C6CD]" />
-         </View>
-          <Text className="text-4xl mb-3 font-bold text-black w-[206px] text-center ">Curated Excellence</Text>
+        <View className="absolute bottom-0 h-[460px] w-full flex-col items-center justify-center gap-2 rounded-t-3xl bg-white p-4">
+          <View className="flex-row items-center justify-center gap-2 pb-10">
+            <View className="h-2 w-8 rounded-[40px] bg-black" />
+            <View className="h-2 w-2 rounded-full bg-[#C6C6CD]" />
+            <View className="h-2 w-2 rounded-full bg-[#C6C6CD]" />
+          </View>
+          <Text className="mb-3 w-[206px] text-center text-4xl font-bold text-black ">
+            Curated Excellence
+          </Text>
           <Text className="w-80 text-center text-lg text-[#45464D]">
             Discover a handpicked selection of premium footwear and accessories.{' '}
           </Text>

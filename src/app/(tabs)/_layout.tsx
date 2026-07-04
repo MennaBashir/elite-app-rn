@@ -1,6 +1,6 @@
 import { Colors } from '@/constants/theme';
 import { Tabs } from 'expo-router';
-import { House, LogIn } from 'lucide-react-native';
+import { House, LayoutGrid } from 'lucide-react-native';
 
 export default function TabLayout() {
   const colors = Colors.light;
@@ -45,7 +45,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <House color={color} size={24} />,
         }}
       />
-     
+      <Tabs.Screen
+        name="categories"
+        options={{
+          title: 'Categories',
+          tabBarIcon: ({ color }) => <LayoutGrid color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen name="category/[id]" options={{ href: null }} />
     </Tabs>
   );
 }

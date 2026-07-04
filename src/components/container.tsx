@@ -1,7 +1,6 @@
-import { ReactNode } from "react";
-import { ScrollView, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
+import { ReactNode } from 'react';
+import { ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Container({ children }: { children: ReactNode }) {
   return (

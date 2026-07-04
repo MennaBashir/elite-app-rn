@@ -3,12 +3,18 @@ import HeaderAuth from '@/components/auth/header';
 import Container from '@/components/container';
 import InputController from '@/components/shared/inputController';
 import { RegisterFormValues, registerSchema } from '@/schema/auth';
+import { signUpWithEmail } from '@/services/auth';
+import { mapAuthError } from '@/utils/authErrors';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { View, Text, Pressable } from 'react-native';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 
 const Signup = () => {
+  const router = useRouter();
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const {
     control,
     handleSubmit,
@@ -22,12 +28,31 @@ const Signup = () => {
       checked: false,
     },
   });
-  const onSubmit = (data: RegisterFormValues) => {
-    console.log('data', data);
+  const onSubmit = async (data: RegisterFormValues) => {
+    setFormError(null);
+    setSubmitting(true);
+    try {
+      await signUpWithEmail({
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
+      });
+      router.replace({
+        pathname: '/(auth)/verify-email',
+        params: { email: data.email.trim().toLowerCase() },
+      });
+    } catch (error) {
+      setFormError(mapAuthError(error));
+    } finally {
+      setSubmitting(false);
+    }
   };
   return (
     <Container>
-      <HeaderAuth title="Welcome Back" description="Sign in to access your exclusive curation." />
+      <HeaderAuth
+        title="Create Account"
+        description="Join ELITE to unlock your exclusive curation."
+      />
       <View className="mt-6 flex flex-col gap-6">
         <InputController
           title="Full Name"
@@ -58,11 +83,10 @@ const Signup = () => {
               <Pressable
                 onPress={() => onChange(!value)}
                 className="flex flex-row items-center gap-2">
-                <View
-                  className={`h-5 w-5 rounded border ${value ? 'bg-[#0058BE]' : 'bg-white'}`}
-                />
+                <View className={`h-5 w-5 rounded border ${value ? 'bg-[#0058BE]' : 'bg-white'}`} />
                 <Text className="text-[#45464D]">
-                I agree to the <Text className="underline">Terms of Service</Text> and <Text className="underline">Privacy Policy</Text>
+                  I agree to the <Text className="underline">Terms of Service</Text> and{' '}
+                  <Text className="underline">Privacy Policy</Text>
                 </Text>
               </Pressable>
             )}
@@ -71,10 +95,21 @@ const Signup = () => {
             <Text className="mt-1 text-sm text-red-500">{errors.checked.message}</Text>
           )}
         </View>
+        {formError && (
+          <View className="rounded-2xl bg-[#FDECEC] px-4 py-3">
+            <Text className="text-[#BA1A1A]">{formError}</Text>
+          </View>
+        )}
         <Pressable
+          disabled={submitting}
           onPress={handleSubmit(onSubmit)}
-          className="mt-5 h-[64px] w-full items-center justify-center rounded-full bg-[#0058BE] ">
-          <Text className="text-lg font-semibold text-white">Create Account</Text>
+          className="mt-5 h-[64px] w-full items-center justify-center rounded-full bg-[#0058BE]"
+          style={{ opacity: submitting ? 0.6 : 1 }}>
+          {submitting ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text className="text-lg font-semibold text-white">Create Account</Text>
+          )}
         </Pressable>
       </View>
       <View className="my-10 flex flex-row items-center justify-center gap-2">
@@ -84,8 +119,10 @@ const Signup = () => {
       </View>
       <ExternalLogin />
       <Text className="mt-8 text-center text-xl text-[#45464D]">
-        Already have an account? {" "}
-        <Link href="/(auth)/login" style={{ color: '#0058BE', fontWeight: 'semibold', marginLeft: 4 }}>
+        Already have an account?{' '}
+        <Link
+          href="/(auth)/login"
+          style={{ color: '#0058BE', fontWeight: 'semibold', marginLeft: 4 }}>
           Login
         </Link>
       </Text>

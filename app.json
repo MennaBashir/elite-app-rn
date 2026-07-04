@@ -3,6 +3,7 @@
     "name": "my-expo-app",
     "slug": "my-expo-app",
     "version": "1.0.0",
+    "scheme": "elite",
     "web": {
       "favicon": "./assets/favicon.png"
     },
@@ -20,14 +21,15 @@
       "expo-font",
       "expo-router",
       "expo-status-bar",
-      "expo-image"
+      "expo-image",
+      "expo-sqlite",
+      "expo-secure-store",
+      "expo-web-browser"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
